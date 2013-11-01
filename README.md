@@ -23,5 +23,10 @@ git clone https://github.com/yeasy/CSIT_Test.git
 ###Run
  ```python run.py```
 
+##Development Plan
+* Finish all module test in OpenDaylight's base release.
+* Integrated into the robot framework.
+
 ##About CSIT
 See [CSIT](https://wiki.opendaylight.org/view/CrossProject:Integration_Group:CSIT) project.
+
