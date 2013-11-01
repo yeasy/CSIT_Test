@@ -8,7 +8,7 @@ import json
 from requests.auth import HTTPBasicAuth
 
 # Global variables
-DEFAULT_CONTROLLER_IP = '9.186.105.113'
+DEFAULT_CONTROLLER_IP = '127.0.0.1'
 DEFAULT_PORT = '8080'
 DEFAULT_PREFIX = 'http://'+DEFAULT_CONTROLLER_IP+':'+DEFAULT_PORT
 DEFAULT_CONTAINER = 'default'
