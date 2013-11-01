@@ -16,7 +16,7 @@ or
 ##Usage
 ###Prerequisites
 * Python 2.6/2.7
-* python requests library
+* Python requests library
 
   ` pip install requests`
 
