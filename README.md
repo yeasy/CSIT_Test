@@ -23,19 +23,20 @@ or
 * [OpenDaylight Controller](https://wiki.opendaylight.org/view/GettingStarted:Developer_Main)
    * Download and build OpenDaylight Controller
 
-  `git clone https://git.opendaylight.org/gerrit/p/controller.git;`
-
-  `cd controller/opendaylight/distribution/opendaylight;`
-
-  `mvn clean install -DskipTests -Dmaven.compile.fork=true -U`
+   ```
+   git clone https://git.opendaylight.org/gerrit/p/controller.git
+   cd controller/opendaylight/distribution/opendaylight
+   mvn clean install -DskipTests -Dmaven.compile.fork=true -U
+   ```
 * Mininet
 
 ###Run
 * Start the [OpenDaylight Controller](https://wiki.opendaylight.org/view/GettingStarted:Developer_Main)
 
- `cd controller/target/distribution.opendaylight-0.1.0-SNAPSHOT-osgipackage/opendaylight/`
-
- `./run.sh`
+ ```
+  cd controller/target/distribution.opendaylight-0.1.0-SNAPSHOT-osgipackage/opendaylight/
+  ./run.sh
+  ```
 
 * Start 2-layer tree topology network, in Mininet, run  `sudo mn --controller=remote,ip=127.0.0.1 --mac --topo tree,2`
 * Configure gateway in the controller web GUI, name = `gateway`, subnet = `10.0.0.254/24`
