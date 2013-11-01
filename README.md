@@ -28,7 +28,7 @@ or
    cd controller/opendaylight/distribution/opendaylight
    mvn clean install -DskipTests -Dmaven.compile.fork=true -U
    ```
-* [Mininet](http://mininet.org/)
+* [Mininet](http://mininet.org/walkthrough/)
 
 ###Run
 * Start the [OpenDaylight Controller](https://wiki.opendaylight.org/view/GettingStarted:Developer_Main)
