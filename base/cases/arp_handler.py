@@ -24,4 +24,5 @@ class ArpHandler(TestModule):
         [u'10.0.0.254/24', [], u'gateway']
         """
         r=super(self.__class__,self).read(suffix)
-        print r
+        if r:
+            print r

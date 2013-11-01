@@ -24,5 +24,6 @@ class HostTracker(TestModule):
         True
         """
         r=super(self.__class__,self).read(suffix)
-        print '10.0.0.1' in r
-        print '10.0.0.2' in r
+        if r:
+            print '10.0.0.1' in r
+            print '10.0.0.2' in r

@@ -24,6 +24,7 @@ class SwitchManager(TestModule):
         True
         """
         r=super(self.__class__,self).read(suffix)
-        print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'} in r
-        print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'} in r
-        print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'} in r
+        if r:
+            print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'} in r
+            print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'} in r
+            print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'} in r
