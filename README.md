@@ -9,11 +9,19 @@ CSIT Test
 ##Get Code
 ```
 git clone git@github.com:yeasy/CSIT_Test.git
-```  
-or  
+```
+or
 ```
 git clone https://github.com/yeasy/CSIT_Test.git
 ```
 
 ##CSIT Introduction
 See [CSIT](https://wiki.opendaylight.org/view/CrossProject:Integration_Group:CSIT) project.
+
+
+##Usage
+###Prerequisites
+* Python 2.6/2.7
+* python request library
+###Run
+ ```python testRun.py```
