@@ -24,4 +24,4 @@ See [CSIT](https://wiki.opendaylight.org/view/CrossProject:Integration_Group:CSI
 * Python 2.6/2.7
 * python request library
 ###Run
- ```python testRun.py```
+ ```python run.py```

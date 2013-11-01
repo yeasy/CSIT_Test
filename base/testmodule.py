@@ -20,6 +20,6 @@ class TestModule(object):
         self.contentType=contentType
         self.prefix=prefix
 
-    def getWithResponse(self,suffix):
+    def get_with_response(self,suffix):
         url = self.prefix+self.restSubContext+'/'+self.container+suffix
         return do_get_request_with_response_content(url, self.contentType, self.user, self.password)
