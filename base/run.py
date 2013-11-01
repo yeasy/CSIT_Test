@@ -7,6 +7,7 @@ Updated: 2013-10-30
 """
 from restlib import *
 from testmodule import TestModule
+from switch_manager import SwitchManager
 
 
 '''
