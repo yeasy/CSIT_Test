@@ -8,12 +8,13 @@ import json
 from requests.auth import HTTPBasicAuth
 
 # Global variables
-DEFAULT_CONTROLLER_IP = '127.0.0.1'
+DEFAULT_CONTROLLER_IP = '9.186.105.113'
 DEFAULT_PORT = '8080'
-DEFAULT_PREFIX = 'http://127.0.0.1:8080'
+DEFAULT_PREFIX = 'http://'+DEFAULT_CONTROLLER_IP+':'+DEFAULT_PORT
 DEFAULT_CONTAINER = 'default'
 DEFAULT_USER = 'admin'
 DEFAULT_PWD = 'admin'
+CASES_DIR='cases'
 
 '''
 Send a POST request.
@@ -56,7 +57,6 @@ def convert_result_to_list(result):
 	list2 = []
 	#print result
 	content = result.values()
-	print content
 	for list1 in content:
 		list2 = [dict1.values() for dict1 in list1]
 	#print list2
