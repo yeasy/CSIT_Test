@@ -1,7 +1,5 @@
 """
-CIST test tools.
-Authors: Denghui Huang@IBM
-		 Baohua Yang@IBM
+CSIT test tools.
+Homepage: https://github.com/yeasy/CSIT_Test
 Updated: 2013-10-30
 """
-__author__ = 'baohua'

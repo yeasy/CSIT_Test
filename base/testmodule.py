@@ -1,7 +1,6 @@
 """
-CIST test tools.
-Authors: Denghui Huang@IBM
-		 Baohua Yang@IBM
+CSIT test tools.
+Authors: Baohua Yang@IBM, Denghui Huang@IBM
 Updated: 2013-10-30
 """
 
