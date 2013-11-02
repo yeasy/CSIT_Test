@@ -2,7 +2,7 @@ CSIT Test
 =========
 *CSIT test tool for OpenDaylight Project*
 
-* Version: 0.1
+* Version: 0.2
 * Authors: [Baohua Yang](mailto:yangbaohua@gmail.com), [Denghui Huang](mailto:huangdenghui@gmail.com)
 * Homepage: <https://github.com/yeasy/CSIT_Test>
 
@@ -30,7 +30,7 @@ or
    ```
 * [Mininet](http://mininet.org/walkthrough/)
 
-###Run
+###Run Test
 * Start the [OpenDaylight Controller](https://wiki.opendaylight.org/view/GettingStarted:Developer_Main)
 
  ```
@@ -43,9 +43,26 @@ or
 * In Mininet, run `h1 ping h2` to make sure the network is connected.
 * Download the test tool code and run `python run.py`
 
+##Code Description
+###`base/`
+The test code for the OpenDaylight base edition.
+* `run.py`
+Main runnable script to start the test.
+* `restlib.py`
+Library for the restful actions, e.g., `GET`, `PUT`, `POST`, `DELETE`, based on the python requests lib.
+* `testmodule.py`
+Basic class of a module to be tested.
+* `cases/`
+Store the test cases for all modules. Test case is named as the module name, e.g., switch_manager.py is the test case for the switch manager module.
+
 ##Development Plan
 * Finish all module test in OpenDaylight's base release.
 * Integrated into the robot framework.
 
+##About OpenDaylight
+OpenDaylight is the first production-quality open-source SDN management platform sponsored by Linux Foundation. 
+Lead SDN enterprises (Ericsson, IBM, Microsoft, Redhat, Cisco, Juniper, NEC, VMWare etc.) are involved to develop and support the project.
+Please go to the official [homepage](http://www.opendaylight.org) page to find more information.
+
 ##About CSIT
-See [CSIT](https://wiki.opendaylight.org/view/CrossProject:Integration_Group:CSIT) project.
+See [CSIT](https://wiki.opendaylight.org/view/CrossProject:Integration_Group:CSIT) description page.
