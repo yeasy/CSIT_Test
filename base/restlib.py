@@ -51,6 +51,42 @@ def do_get_request_with_status_code(url, content_type, user=DEFAULT_USER, passwo
 		return r.status_code
 
 '''
+Send a PUT request.
+
+@return The status code.
+'''
+def do_put_request(url, content_type, user=DEFAULT_USER, password=DEFAULT_PWD):
+	if content_type == 'json':
+		headers = {'Content-type' : 'application/json', 'Accept' : 'text/plain'}
+		data = json.dumps(payload)
+	elif content_type == 'xml':
+		headers = {'Content-type' : 'application/xml', 'Accept' : 'text/plain'}
+	else:
+		print 'unsupported content-type'
+	try:
+		r = requests.put(url, data, headers = headers, auth=(user, password))
+		r.raise_for_status()
+	except requests.exceptions.HTTPError as e:
+		return 400 
+	else:
+		return r.status_code
+
+'''
+Send a DELETE request.
+
+@return The status code.
+'''
+def do_delete_request(url, user=DEFAULT_USER, password=DEFAULT_PWD):
+	try:
+		r = requests.delete(url, auth=(user, password))
+		r.raise_for_status()
+	except requests.exceptions.HTTPError as e:
+		print e
+		return r.status_code
+	else:
+		return r.status_code
+
+'''
 Convert the result content to list.
 '''
 def convert_result_to_list(result):
