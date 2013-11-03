@@ -14,3 +14,16 @@ class TopologyManager(TestModule):
     """
     def __init__(self,restSubContext='/controller/nb/v2/topology',user=DEFAULT_USER, password=DEFAULT_PWD,container=DEFAULT_CONTAINER,contentType='json',prefix=DEFAULT_PREFIX):
        super(self.__class__,self).__init__(restSubContext,user,password,container,contentType,prefix)
+
+    def get_topology(self,suffix='/default'):
+        """
+        The name is suggested to match the NB API.
+        Show the topology
+        >>> TopologyManager().get_topology()
+        True
+        True
+        True
+        """
+        r=super(self.__class__,self).read(suffix)
+        if r:
+            print r

@@ -29,7 +29,7 @@ class TestModule(object):
         if body: #create with body
             pass
         else: #create without body
-            pass
+            return do_put_request(url, self.contentType, self.user, self.password)
 
     def read(self,suffix):
         """

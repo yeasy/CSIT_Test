@@ -28,3 +28,12 @@ class SwitchManager(TestModule):
             print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'} in r
             print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'} in r
             print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'} in r
+
+    def add_property_to_node(self,suffix='/node/OF/00:00:00:00:00:00:00:02/property/description/Switch2'):
+        """
+        Add a property to some node.
+
+        >>> SwitchManager().add_property_to_node()
+        """
+        r=super(self.__class__,self).create(suffix)
+        print r
