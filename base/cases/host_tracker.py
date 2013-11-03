@@ -15,7 +15,7 @@ class HostTracker(TestModule):
     def __init__(self,restSubContext='/controller/nb/v2/hosttracker',user=DEFAULT_USER, password=DEFAULT_PWD,container=DEFAULT_CONTAINER,contentType='json',prefix=DEFAULT_PREFIX):
        super(self.__class__,self).__init__(restSubContext,user,password,container,contentType,prefix)
 
-    def get_active_hosts(self,suffix='/hosts/active'):
+    def get_active_hosts(self,suffix='hosts/active'):
         """
         The name is suggested to match the NB API.
         list all active hosts, should be done after using h1 ping h2 in mininet

@@ -14,7 +14,7 @@ class SwitchManager(TestModule):
     def __init__(self,restSubContext='/controller/nb/v2/switchmanager',user=DEFAULT_USER, password=DEFAULT_PWD,container=DEFAULT_CONTAINER,contentType='json',prefix=DEFAULT_PREFIX):
        super(self.__class__,self).__init__(restSubContext,user,password,container,contentType,prefix)
 
-    def get_nodes(self,suffix='/nodes'):
+    def get_nodes(self,suffix='nodes'):
         """
         The name is suggested to match the NB API.
         list all nodes and their properties
@@ -29,11 +29,11 @@ class SwitchManager(TestModule):
             print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'} in r
             print {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'} in r
 
-    def add_property_to_node(self,suffix='/node/OF/00:00:00:00:00:00:00:02/property/description/Switch2'):
+    def add_property_to_node(self,suffix='node/OF/00:00:00:00:00:00:00:02/property/description/Switch2'):
         """
         Add a property to some node.
 
-        >>> SwitchManager().add_property_to_node()
+        #>>> SwitchManager().add_property_to_node()
         """
         r=super(self.__class__,self).create(suffix)
         print r

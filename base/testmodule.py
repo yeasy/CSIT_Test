@@ -35,7 +35,9 @@ class TestModule(object):
         """
         GET from given suffix url.
         """
-        url = self.prefix+self.restSubContext+'/'+self.container+suffix
+        url = self.prefix+self.restSubContext+'/'+self.container
+        if suffix:
+            url += '/'+suffix
         return do_get_request_with_response_content(url, self.contentType, self.user, self.password)
 
     def update(self,suffix,body=None):
