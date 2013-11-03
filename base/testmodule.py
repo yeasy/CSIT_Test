@@ -26,10 +26,7 @@ class TestModule(object):
         TODO: complete
         """
         url = self.prefix+self.restSubContext+'/'+self.container+suffix
-        if body: #create with body
-            pass
-        else: #create without body
-            return do_put_request(url, self.contentType, self.user, self.password)
+        return do_post_request(url, self.contentType, self.user, self.password)
 
     def read(self,suffix):
         """
@@ -44,14 +41,12 @@ class TestModule(object):
         TODO: complete
         """
         url = self.prefix+self.restSubContext+'/'+self.container+suffix
-        if body: #create with body
-            pass
-        else: #create without body
-            pass
+        return do_put_request(url, self.contentType, body, self.user, self.password)
 
     def delete(self,suffix):
         """
         DELETE to given suffix url.
         TODO: complete
         """
-        pass
+        url = self.prefix+self.restSubContext+'/'+self.container+suffix
+        return do_delete_request(url, self.user, self.password)

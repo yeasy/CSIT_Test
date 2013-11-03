@@ -16,22 +16,26 @@ DEFAULT_CONTAINER = 'default'
 DEFAULT_USER = 'admin'
 DEFAULT_PWD = 'admin'
 CASES_DIR='cases'
+TIMEOUTS=2
 
 '''
 Send a POST request.
 '''
-def do_post_request(url, content_type, payload, user=DEFAULT_USER, password=DEFAULT_PWD):
+def do_post_request(url, content_type, payload=None, user=DEFAULT_USER, password=DEFAULT_PWD):
 	if content_type == 'json':
 		headers = {'Content-type' : 'application/json', 'Accept' : 'text/plain'}
-		data = json.dumps(payload)
+		if payload == None:
+			data = None
+		else:
+			data = json.dumps(payload)
 	elif content_type == 'xml':
 		headers = {'Content-type' : 'application/xml', 'Accept' : 'text/plain'}
 	else:
 		print 'unsupported content-type'
 	try:
-		r = requests.post(url, data, headers = headers, auth=(user, password))
+		r = requests.post(url, data, headers = headers, auth=(user, password), timeout=TIMEOUTS)
 		r.raise_for_status()
-	except requests.exceptions.HTTPError as e:
+	except (requests.exceptions.HTTPError, requests.exceptions.Timeout) as e:
 		return 400 
 	else:
 		return r.status_code
@@ -43,9 +47,9 @@ Send a GET request.
 '''
 def do_get_request_with_status_code(url, content_type, user=DEFAULT_USER, password=DEFAULT_PWD):
 	try:
-		r = requests.get(url, auth=(user, password))
+		r = requests.get(url, auth=(user, password), timeout=TIMEOUTS)
 		r.raise_for_status()
-	except requests.exceptions.HTTPError as e:
+	except (requests.exceptions.HTTPError, requests.exceptions.Timeout) as e:
 		print e
 		return r.status_code
 	else:
@@ -56,18 +60,21 @@ Send a PUT request.
 
 @return The status code.
 '''
-def do_put_request(url, content_type, user=DEFAULT_USER, password=DEFAULT_PWD):
+def do_put_request(url, content_type, payload=None, user=DEFAULT_USER, password=DEFAULT_PWD):
 	if content_type == 'json':
 		headers = {'Content-type' : 'application/json', 'Accept' : 'text/plain'}
-		data = json.dumps(payload)
+		if payload == None:
+			data=None
+		else:
+			data = json.dumps(payload)
 	elif content_type == 'xml':
 		headers = {'Content-type' : 'application/xml', 'Accept' : 'text/plain'}
 	else:
 		print 'unsupported content-type'
 	try:
-		r = requests.put(url, data, headers = headers, auth=(user, password))
+		r = requests.put(url, data, headers = headers, auth=(user, password), timeout=TIMEOUTS)
 		r.raise_for_status()
-	except requests.exceptions.HTTPError as e:
+	except (requests.exceptions.HTTPError, requests.exceptions.Timeout) as e:
 		return 400 
 	else:
 		return r.status_code
@@ -79,9 +86,9 @@ Send a DELETE request.
 '''
 def do_delete_request(url, user=DEFAULT_USER, password=DEFAULT_PWD):
 	try:
-		r = requests.delete(url, auth=(user, password))
+		r = requests.delete(url, auth=(user, password), timeout=TIMEOUTS)
 		r.raise_for_status()
-	except requests.exceptions.HTTPError as e:
+	except (requests.exceptions.HTTPError, requests.exceptions.Timeout) as e:
 		print e
 		return r.status_code
 	else:
@@ -111,9 +118,9 @@ Send a GET request and get the response.
 def do_get_request_with_response_content(url, content_type, user=DEFAULT_USER, password=DEFAULT_PWD):
 	try:
 		#print url
-		r = requests.get(url, auth=(user,password))
+		r = requests.get(url, auth=(user,password), timeout=TIMEOUTS)
 		r.raise_for_status()
-	except requests.exceptions.HTTPError as e:
+	except (requests.exceptions.HTTPError, requests.exceptions.Timeout) as e:
 		print e
 		return None
 	else:

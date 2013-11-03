@@ -34,6 +34,7 @@ class SwitchManager(TestModule):
         Add a property to some node.
 
         >>> SwitchManager().add_property_to_node()
+        201
         """
-        r=super(self.__class__,self).create(suffix)
+        r=super(self.__class__,self).update(suffix)
         print r
