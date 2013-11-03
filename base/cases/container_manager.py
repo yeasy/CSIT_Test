@@ -14,3 +14,14 @@ class ContainerManager(TestModule):
     """
     def __init__(self,restSubContext='/controller/nb/v2/containermanager',user=DEFAULT_USER, password=DEFAULT_PWD,container=DEFAULT_CONTAINER,contentType='json',prefix=DEFAULT_PREFIX):
        super(self.__class__,self).__init__(restSubContext,user,password,container,contentType,prefix)
+
+    def get_containers(self,suffix='containers'):
+        """
+        The name is suggested to match the NB API.
+        Show the flows
+        >>> ContainerManager().get_containers()
+        """
+        self.container = None
+        r=super(self.__class__,self).read(suffix)
+        if r:
+            print r

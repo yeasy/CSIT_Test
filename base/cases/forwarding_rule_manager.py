@@ -14,3 +14,13 @@ class ForwardingRuleManager(TestModule):
     """
     def __init__(self,restSubContext='/controller/nb/v2/flowprogrammer',user=DEFAULT_USER, password=DEFAULT_PWD,container=DEFAULT_CONTAINER,contentType='json',prefix=DEFAULT_PREFIX):
        super(self.__class__,self).__init__(restSubContext,user,password,container,contentType,prefix)
+
+    def get_flows(self,suffix=''):
+        """
+        The name is suggested to match the NB API.
+        Show the flows
+        >>> ForwardingRuleManager().get_flows()
+        """
+        r=super(self.__class__,self).read(suffix)
+        if r:
+            print r

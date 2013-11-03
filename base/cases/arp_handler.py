@@ -15,7 +15,7 @@ class ArpHandler(TestModule):
     def __init__(self,restSubContext='/controller/nb/v2/subnetservice',user=DEFAULT_USER, password=DEFAULT_PWD,container=DEFAULT_CONTAINER,contentType='json',prefix=DEFAULT_PREFIX):
        super(self.__class__,self).__init__(restSubContext,user,password,container,contentType,prefix)
 
-    def get_subnets(self,suffix='/subnets'):
+    def get_subnets(self,suffix='subnets'):
         """
         The name is suggested to match the NB API.
         list all subnets and their properties.

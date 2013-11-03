@@ -33,3 +33,12 @@ class TopologyManager(TestModule):
             print {u'tailNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'}, u'type': u'OF', u'id': u'1'}, u'headNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'}, u'type': u'OF', u'id': u'3'}} in r
             print {u'tailNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'}, u'type': u'OF', u'id': u'3'}, u'headNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'}, u'type': u'OF', u'id': u'1'}} in r
             print {u'tailNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'}, u'type': u'OF', u'id': u'3'}, u'headNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'}, u'type': u'OF', u'id': u'2'}} in r
+
+    def get_userlinks(self,suffix='userLinks'):
+        """
+        The name is suggested to match the NB API.
+        Show the userlinks.
+        """
+        r=super(self.__class__,self).read(suffix)
+        if r:
+            print r
