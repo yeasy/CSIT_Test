@@ -18,7 +18,7 @@ from testmodule import TestModule
 Run single test on given module.
 '''
 def test_case(module_name):
-    print module_name
+    print "#Test case: " + module_name.split('/')[1][:-3].replace('_',' ')
     cmd = 'python -m doctest '+module_name
     os.system(cmd)
 
@@ -42,6 +42,6 @@ TODO: extend to write a template to all bundles.
 '''
 if __name__ == '__main__':
     doctest.testmod()
-    module_names=['arp_handler','host_tracker','switch_manager']
+    module_names=['switch_manager','topology_manager','forwarding_rule_manager','statistics_manager','host_tracker','arp_handler','container_manager']
     run(module_names)
     #run()
