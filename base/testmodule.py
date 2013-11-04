@@ -25,7 +25,11 @@ class TestModule(object):
         PUT to given suffix url.
         TODO: complete
         """
-        url = self.prefix+self.restSubContext+'/'+self.container+suffix
+        url = self.prefix+self.restSubContext
+        if self.container:
+            url += '/'+self.container
+        if suffix:
+            url += '/'+suffix
         return do_post_request(url, self.contentType, self.user, self.password)
 
     def read(self,suffix):
@@ -44,7 +48,11 @@ class TestModule(object):
         POST to given suffix url.
         TODO: complete
         """
-        url = self.prefix+self.restSubContext+'/'+self.container+suffix
+        url = self.prefix+self.restSubContext
+        if self.container:
+            url += '/'+self.container
+        if suffix:
+            url += '/'+suffix
         return do_put_request(url, self.contentType, body, self.user, self.password)
 
     def delete(self,suffix):
@@ -52,5 +60,9 @@ class TestModule(object):
         DELETE to given suffix url.
         TODO: complete
         """
-        url = self.prefix+self.restSubContext+'/'+self.container+suffix
+        url = self.prefix+self.restSubContext
+        if self.container:
+            url += '/'+self.container
+        if suffix:
+            url += '/'+suffix
         return do_delete_request(url, self.user, self.password)
