@@ -68,14 +68,8 @@ def do_put_request(url, content_type, payload=None, user=DEFAULT_USER, password=
 			data=None
 		else:
 			data = json.dumps(payload)
-			data={
-				"status":"Success",
-				"name":"link1",
-				"srcNodeConnector":"OF|1@OF|00:00:00:00:00:00:00:01",
-				"dstNodeConnector":"OF|1@OF|00:00:00:00:00:00:00:02"
-			}
 	elif content_type == 'xml':
-		headers = {'Content-type' : 'application/xml', 'Accept' : 'text/plain'}
+		headers = {'Content-type' : 'application/xml', 'Accept' : '*/*'}
 	else:
 		print 'unsupported content-type'
 	try:
@@ -142,4 +136,11 @@ def do_get_request_with_response_content(url, content_type, user=DEFAULT_USER, p
 				return None
 
 if __name__ == '__main__':
-	pass
+	#example
+	#Note: in json body, all field name and value (if it is string type) must be enclosed in double quotes.
+	#This constraint maybe cause by json parser.
+	body = {"status": "Success", "dstNodeConnector": "OF|1@OF|00:00:00:00:00:00:00:01", "name": "link3", "srcNodeConnector": "OF|1@OF|00:00:00:00:00:00:00:03"}
+	url='http://127.0.0.1:8080/controller/nb/v2/topology/default/userLink/link3'
+	content_type='json'
+	print do_put_request(url, content_type, body)
+
