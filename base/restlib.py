@@ -16,7 +16,7 @@ DEFAULT_CONTAINER = 'default'
 DEFAULT_USER = 'admin'
 DEFAULT_PWD = 'admin'
 CASES_DIR='cases'
-TIMEOUTS=2
+TIMEOUTS=5
 
 '''
 Send a POST request.
@@ -28,6 +28,7 @@ def do_post_request(url, content_type, payload=None, user=DEFAULT_USER, password
 			data = None
 		else:
 			data = json.dumps(payload)
+			print data
 	elif content_type == 'xml':
 		headers = {'Content-type' : 'application/xml', 'Accept' : 'text/plain'}
 	else:
@@ -62,11 +63,17 @@ Send a PUT request.
 '''
 def do_put_request(url, content_type, payload=None, user=DEFAULT_USER, password=DEFAULT_PWD):
 	if content_type == 'json':
-		headers = {'Content-type' : 'application/json', 'Accept' : 'text/plain'}
+		headers = {'Content-type' : 'application/json', 'Accept' : '*/*'}
 		if payload == None:
 			data=None
 		else:
 			data = json.dumps(payload)
+			data={
+				"status":"Success",
+				"name":"link1",
+				"srcNodeConnector":"OF|1@OF|00:00:00:00:00:00:00:01",
+				"dstNodeConnector":"OF|1@OF|00:00:00:00:00:00:00:02"
+			}
 	elif content_type == 'xml':
 		headers = {'Content-type' : 'application/xml', 'Accept' : 'text/plain'}
 	else:
@@ -75,6 +82,8 @@ def do_put_request(url, content_type, payload=None, user=DEFAULT_USER, password=
 		r = requests.put(url, data, headers = headers, auth=(user, password), timeout=TIMEOUTS)
 		r.raise_for_status()
 	except (requests.exceptions.HTTPError, requests.exceptions.Timeout) as e:
+		print headers,data
+		print e
 		return 400 
 	else:
 		return r.status_code

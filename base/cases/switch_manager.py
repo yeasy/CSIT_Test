@@ -6,60 +6,63 @@ Updated: 2013-11-01
 from restlib import *
 from testmodule import TestModule
 
+
 class SwitchManager(TestModule):
     """
     Test for the switch manager, including read switch nodes.
     Start 2-layer tree topology network. e.g., in Mininet, run  'sudo mn --controller=remote,ip=127.0.0.1 --mac --topo tree,2'
     """
-    def __init__(self,restSubContext='/controller/nb/v2/switchmanager',user=DEFAULT_USER, password=DEFAULT_PWD,container=DEFAULT_CONTAINER,contentType='json',prefix=DEFAULT_PREFIX):
-       super(self.__class__,self).__init__(restSubContext,user,password,container,contentType,prefix)
+
+    def __init__(self, restSubContext='/controller/nb/v2/switchmanager', user=DEFAULT_USER, password=DEFAULT_PWD,
+                 container=DEFAULT_CONTAINER, contentType='json', prefix=DEFAULT_PREFIX):
+        super(self.__class__, self).__init__(restSubContext, user, password, container, contentType, prefix)
 
     def get_nodes(self):
         """
         The name is suggested to match the NB API.
         list all nodes and their properties
         """
-        suffix='nodes'
-        r=super(self.__class__,self).read(suffix)
+        suffix = 'nodes'
+        r = super(self.__class__, self).read(suffix)
         if r:
             return r
 
-    def get_node(self,suffix):
+    def get_node(self, suffix):
         """
         The name is suggested to match the NB API.
         list nodeconnector and properties of a node.
         """
-        r=super(self.__class__,self).read(suffix)
+        r = super(self.__class__, self).read(suffix)
         if r:
             return r
 
-    def add_property_to_node(self,node_type,node_id,property,value):
+    def add_property_to_node(self, node_type, node_id, property, value):
         """
         Add a property to given node.
         """
-        suffix='node/'+node_type+'/'+node_id+'/property'
-        r=super(self.__class__,self).update(suffix+'/'+property+'/'+str(value))
+        suffix = 'node/' + node_type + '/' + node_id + '/property'
+        r = super(self.__class__, self).update(suffix + '/' + property + '/' + str(value))
 
-    def remove_property_from_node(self,node_type,node_id,property):
+    def remove_property_from_node(self, node_type, node_id, property):
         """
         Remove a property from given node.
         """
-        suffix='node/'+node_type+'/'+node_id+'/property'
-        r=super(self.__class__,self).delete(suffix+'/'+property)
+        suffix = 'node/' + node_type + '/' + node_id + '/property'
+        r = super(self.__class__, self).delete(suffix + '/' + property)
 
-    def add_property_to_nodeconnector(self,node_type,node_id,nc_type,nc_id,property,value):
+    def add_property_to_nodeconnector(self, node_type, node_id, nc_type, nc_id, property, value):
         """
         Add a property to given node.
         """
-        suffix='nodeconnector/'+node_type+'/'+node_id+'/'+nc_type+'/'+nc_id+'/property'
-        r=super(self.__class__,self).update(suffix+'/'+property+'/'+str(value))
+        suffix = 'nodeconnector/' + node_type + '/' + node_id + '/' + nc_type + '/' + nc_id + '/property'
+        r = super(self.__class__, self).update(suffix + '/' + property + '/' + str(value))
 
-    def remove_property_from_nodeconnector(self,node_type,node_id,nc_type,nc_id,property):
+    def remove_property_from_nodeconnector(self, node_type, node_id, nc_type, nc_id, property):
         """
         Add a property to given node.
         """
-        suffix='nodeconnector/'+node_type+'/'+node_id+'/'+nc_type+'/'+nc_id+'/property'
-        r=super(self.__class__,self).delete(suffix+'/'+property)
+        suffix = 'nodeconnector/' + node_type + '/' + node_id + '/' + nc_type + '/' + nc_id + '/property'
+        r = super(self.__class__, self).delete(suffix + '/' + property)
 
     def test_list_nodes(self):
         """
@@ -68,13 +71,13 @@ class SwitchManager(TestModule):
         >>> SwitchManager().test_list_nodes()
         True
         """
-        r=self.get_nodes()
+        r = self.get_nodes()
         if r:
             print ({u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'} in r and \
                    {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'} in r and \
                    {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'} in r)
 
-    def test_node_property_operations(self,node_type,node_id,property,value):
+    def test_node_property_operations(self, node_type, node_id, property, value):
         """
         Test the add,remove,show actions on node properties.
 
@@ -92,21 +95,21 @@ class SwitchManager(TestModule):
         True
         """
         #current node properties should not include description
-        r=self.get_nodes()
+        r = self.get_nodes()
         index = r.index({u'type': node_type, u'id': node_id})
-        print r[index+1][property] == {u'value': u'None'}
+        print r[index + 1][property] == {u'value': u'None'}
         #After adding, current node properties should include description
-        self.add_property_to_node(node_type,node_id,property,value)
-        r=self.get_nodes()
+        self.add_property_to_node(node_type, node_id, property, value)
+        r = self.get_nodes()
         index = r.index({u'type': node_type, u'id': node_id})
-        print r[index+1][property] ==  {u'value': value}
+        print r[index + 1][property] == {u'value': value}
         #After removing, current node properties should not include description
-        self.remove_property_from_node(node_type,node_id,property)
-        r=self.get_nodes()
+        self.remove_property_from_node(node_type, node_id, property)
+        r = self.get_nodes()
         index = r.index({u'type': node_type, u'id': node_id})
-        print r[index+1][property] ==  {u'value': u'None'}
+        print r[index + 1][property] == {u'value': u'None'}
 
-    def test_nodeconnector_property_operations(self,node_type,node_id,nc_type, nc_id,property,value):
+    def test_nodeconnector_property_operations(self, node_type, node_id, nc_type, nc_id, property, value):
         """
         Test the add,remove,show actions on nodeconnector properties.
 
@@ -115,24 +118,24 @@ class SwitchManager(TestModule):
         True
         True
         """
-        node_suffix='node/'+node_type+'/'+node_id
+        node_suffix = 'node/' + node_type + '/' + node_id
         #default bw should be 10000000000L
-        r=self.get_node(node_suffix)
+        r = self.get_node(node_suffix)
         index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
-        default_value = r[index+1][property]['value']
+        default_value = r[index + 1][property]['value']
         #After setting, the value should be the value
-        self.add_property_to_nodeconnector(node_type,node_id,nc_type,nc_id,property,value)
-        r=self.get_node(node_suffix)
+        self.add_property_to_nodeconnector(node_type, node_id, nc_type, nc_id, property, value)
+        r = self.get_node(node_suffix)
         index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
-        current_value = r[index+1][property]['value']
+        current_value = r[index + 1][property]['value']
         print current_value == value
         #After removing, the bandwidth property should be empty
-        self.remove_property_from_nodeconnector(node_type,node_id,nc_type,nc_id,property)
-        r=self.get_node(node_suffix)
+        self.remove_property_from_nodeconnector(node_type, node_id, nc_type, nc_id, property)
+        r = self.get_node(node_suffix)
         index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
-        print property not in r[index+1]
-        self.add_property_to_nodeconnector(node_type,node_id,nc_type,nc_id,property,default_value)
-        r=self.get_node(node_suffix)
+        print property not in r[index + 1]
+        self.add_property_to_nodeconnector(node_type, node_id, nc_type, nc_id, property, default_value)
+        r = self.get_node(node_suffix)
         index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
-        current_value = r[index+1][property]['value']
+        current_value = r[index + 1][property]['value']
         print current_value == default_value

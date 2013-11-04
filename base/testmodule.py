@@ -22,7 +22,7 @@ class TestModule(object):
 
     def create(self,suffix,body=None):
         """
-        PUT to given suffix url.
+        POST to given suffix url.
         TODO: complete
         """
         url = self.prefix+self.restSubContext
@@ -30,9 +30,9 @@ class TestModule(object):
             url += '/'+self.container
         if suffix:
             url += '/'+suffix
-        return do_post_request(url, self.contentType, self.user, self.password)
+        return do_post_request(url, self.contentType,body, self.user, self.password)
 
-    def read(self,suffix):
+    def read(self,suffix=None):
         """
         GET from given suffix url.
         """
@@ -45,7 +45,7 @@ class TestModule(object):
 
     def update(self,suffix,body=None):
         """
-        POST to given suffix url.
+        PUT to given suffix url.
         TODO: complete
         """
         url = self.prefix+self.restSubContext
