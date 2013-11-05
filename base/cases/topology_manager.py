@@ -61,25 +61,33 @@ class TopologyManager(TestModule):
         """
         suffix='userLink'
         r=super(self.__class__,self).update(suffix+'/'+name,config)
-        print r
+        return r
+
+    def remove_userlink(self,name):
+        """
+        Remove a userlink.
+        """
+        suffix='userLink'
+        r=super(self.__class__,self).delete(suffix+'/'+name)
+        return r
 
     def test_userlink_operations(self, name, config):
         """
         Test userlink operations, like adding and removing.
         #>>> TopologyManager().test_userlink_operations('link1', '<topologyUserLinkConfig> <status>Success</status> <name>link1</name> <srcNodeConnector>OF|1@OF|00:00:00:00:00:00:00:02</srcNodeConnector> <dstNodeConnector>OF|1@OF|00:00:00:00:00:00:00:03</dstNodeConnector> </topologyUserLinkConfig>')
         >>> TopologyManager().test_userlink_operations('link1', {'status':'Success','name':'link1','srcNodeConnector':'OF|1@OF|00:00:00:00:00:00:00:02','dstNodeConnector':'OF|1@OF|00:00:00:00:00:00:00:03'})
+        True
         """
         #currently there is no user link
-        userlink_suffix = 'userLink/' + name
+        result=[]
         r = self.get_userlinks()
-        print r == None
+        result.append(r==None)
         #After adding, there will be one userlink
-        config={
-         "status":"Success",
-         "name":"link1",
-         "srcNodeConnector":"OF|1@OF|00:00:00:00:00:00:00:01",
-         "dstNodeConnector":"OF|1@OF|00:00:00:00:00:00:00:02"
-        }
         self.add_userlink(name,config)
         r = self.get_userlinks()
-        print r
+        result.append(r == config.values())
+        #After removing, there will be none userlink
+        self.remove_userlink(name)
+        r = self.get_userlinks()
+        result.append(r == None)
+        return result == [True,True,True]

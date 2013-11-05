@@ -63,22 +63,20 @@ Send a PUT request.
 '''
 def do_put_request(url, content_type, payload=None, user=DEFAULT_USER, password=DEFAULT_PWD):
 	if content_type == 'json':
-		headers = {'Content-type' : 'application/json', 'Accept' : '*/*'}
+		headers = {'Content-type' : 'application/json', 'Accept' : 'application/json'}
 		if payload == None:
 			data=None
 		else:
 			data = json.dumps(payload)
 	elif content_type == 'xml':
-		headers = {'Content-type' : 'application/xml', 'Accept' : '*/*'}
+		headers = {'Content-type' : 'application/xml', 'Accept' : 'application/xml'}
 	else:
 		print 'unsupported content-type'
 	try:
 		r = requests.put(url, data, headers = headers, auth=(user, password), timeout=TIMEOUTS)
 		r.raise_for_status()
 	except (requests.exceptions.HTTPError, requests.exceptions.Timeout) as e:
-		print headers,data
-		print e
-		return 400 
+		return 400
 	else:
 		return r.status_code
 
