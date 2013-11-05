@@ -41,5 +41,4 @@ class ArpHandler(TestModule):
         >>> ArpHandler().test_subnet_operations('test',{'name':'test','subnet':'10.0.0.254/8'})
         True
         """
-        r = super(self.__class__, self).test_add_remove_operations('subnets', 'subnet', name, body, 'subnetConfig')
-        return r == [True, True]
+        return super(self.__class__, self).test_add_remove_operations('subnets', 'subnet', name, body, 'subnetConfig')

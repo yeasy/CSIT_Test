@@ -41,5 +41,4 @@ class ForwardingManager(TestModule):
         >>> ForwardingManager().test_static_route_operations('route1',{'name':'route1','prefix':'192.168.1.0/24','nextHop':'10.0.0.2'})
         True
         """
-        r = super(self.__class__, self).test_add_remove_operations('routes', 'route', name, body, 'staticRoute')
-        return r == [True, True]
+        return super(self.__class__, self).test_add_remove_operations('routes', 'route', name, body, 'staticRoute')

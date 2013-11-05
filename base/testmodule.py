@@ -50,7 +50,7 @@ class TestModule(object):
         r = self.get_entries(suffix_entries)
         v = r.get(key)
         result.append(body not in v if v else True)
-        return result
+        return result == [True, True]
 
     def create(self,suffix,body=None):
         """

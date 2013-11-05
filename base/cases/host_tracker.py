@@ -43,5 +43,5 @@ class HostTracker(TestModule):
         >>> HostTracker().test_host_operations('10.0.0.4',{'nodeType': 'OF', 'dataLayerAddress': '5e:bf:79:84:10:a6', 'vlan': '0', 'nodeId': '00:00:00:00:00:00:00:03', 'nodeConnectorId': '2', 'networkAddress': '10.0.0.4', 'staticHost': True, 'nodeConnectorType': 'OF'})
         True
         """
-        r = super(self.__class__, self).test_add_remove_operations('hosts/active', 'address', name, body, 'hostConfig')
-        return r == [True, True]
+        return super(self.__class__, self).test_add_remove_operations('hosts/active', 'address', name, body,
+                                                                      'hostConfig')

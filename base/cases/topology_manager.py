@@ -86,5 +86,4 @@ class TopologyManager(TestModule):
         >>> TopologyManager().test_userlink_operations('link1', {'status':'Success','name':'link1','srcNodeConnector':'OF|1@OF|00:00:00:00:00:00:00:02','dstNodeConnector':'OF|1@OF|00:00:00:00:00:00:00:03'})
         True
         """
-        r = super(self.__class__, self).test_add_remove_operations('userLinks', 'userLink', name, body, 'userLinks')
-        return r == [True, True]
+        return super(self.__class__, self).test_add_remove_operations('userLinks', 'userLink', name, body, 'userLinks')
