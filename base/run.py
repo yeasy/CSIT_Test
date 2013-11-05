@@ -43,6 +43,6 @@ TODO: extend to write a template to all bundles.
 if __name__ == '__main__':
     doctest.testmod()
     module_names=['switch_manager','topology_manager','forwarding_rule_manager','statistics_manager','host_tracker','arp_handler','container_manager']
-    module_names=['topology_manager']
+    module_names=['switch_manager','topology_manager']
     run(module_names)
     #run()

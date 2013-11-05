@@ -83,31 +83,27 @@ class SwitchManager(TestModule):
 
         >>> SwitchManager().test_node_property_operations('OF','00:00:00:00:00:00:00:01','description','Switch1')
         True
-        True
-        True
         >>> SwitchManager().test_node_property_operations('OF','00:00:00:00:00:00:00:02','description','Switch2')
-        True
-        True
         True
         >>> SwitchManager().test_node_property_operations('OF','00:00:00:00:00:00:00:03','description','Switch3')
         True
-        True
-        True
         """
+        result=[]
         #current node properties should not include description
         r = self.get_nodes()
         index = r.index({u'type': node_type, u'id': node_id})
-        print r[index + 1][property] == {u'value': u'None'}
+        result.append(r[index + 1][property] == {u'value': u'None'})
         #After adding, current node properties should include description
         self.add_property_to_node(node_type, node_id, property, value)
         r = self.get_nodes()
         index = r.index({u'type': node_type, u'id': node_id})
-        print r[index + 1][property] == {u'value': value}
+        result.append(r[index + 1][property] == {u'value': value})
         #After removing, current node properties should not include description
         self.remove_property_from_node(node_type, node_id, property)
         r = self.get_nodes()
         index = r.index({u'type': node_type, u'id': node_id})
-        print r[index + 1][property] == {u'value': u'None'}
+        result.append(r[index + 1][property] == {u'value': u'None'})
+        return result == [True,True,True]
 
     def test_nodeconnector_property_operations(self, node_type, node_id, nc_type, nc_id, property, value):
         """
@@ -115,9 +111,8 @@ class SwitchManager(TestModule):
 
         >>> SwitchManager().test_nodeconnector_property_operations('OF','00:00:00:00:00:00:00:01','OF','1','bandwidth',1000)
         True
-        True
-        True
         """
+        result=[]
         node_suffix = 'node/' + node_type + '/' + node_id
         #default bw should be 10000000000L
         r = self.get_node(node_suffix)
@@ -128,14 +123,15 @@ class SwitchManager(TestModule):
         r = self.get_node(node_suffix)
         index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
         current_value = r[index + 1][property]['value']
-        print current_value == value
+        result.append(current_value == value)
         #After removing, the bandwidth property should be empty
         self.remove_property_from_nodeconnector(node_type, node_id, nc_type, nc_id, property)
         r = self.get_node(node_suffix)
         index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
-        print property not in r[index + 1]
+        result.append(property not in r[index + 1])
         self.add_property_to_nodeconnector(node_type, node_id, nc_type, nc_id, property, default_value)
         r = self.get_node(node_suffix)
         index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
         current_value = r[index + 1][property]['value']
-        print current_value == default_value
+        result.append(current_value == default_value)
+        return result == [True,True,True]
