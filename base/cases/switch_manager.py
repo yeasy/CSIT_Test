@@ -94,21 +94,21 @@ class SwitchManager(TestModule):
         result = []
         #current node properties should not include description
         r = self.get_nodes()
-        v = [e['properties'][property] for e in r['nodeProperties'] if
+        v = [e['properties'].get(property) for e in r['nodeProperties'] if
              e['node'] == {u'type': node_type, u'id': node_id}]
-        result.append(v == [{u'value': u'None'}])
+        result.append(v == [{u'value': u'None'}] or v == [None])
         #After adding, current node properties should include description
         self.add_property_to_node(node_type, node_id, property, value)
         r = self.get_nodes()
-        v = [e['properties'][property] for e in r['nodeProperties'] if
+        v = [e['properties'].get(property) for e in r['nodeProperties'] if
              e['node'] == {u'type': node_type, u'id': node_id}]
         result.append(v == [{u'value': value}])
         #After removing, current node properties should not include description
         self.remove_property_from_node(node_type, node_id, property)
         r = self.get_nodes()
-        v = [e['properties'][property] for e in r['nodeProperties'] if
+        v = [e['properties'].get(property) for e in r['nodeProperties'] if
              e['node'] == {u'type': node_type, u'id': node_id}]
-        result.append(v == [{u'value': u'None'}])
+        result.append(v == [{u'value': u'None'}] or v == [None])
         return result == [True, True, True]
 
     def test_nodeconnector_property_operations(self, node_type, node_id, nc_type, nc_id, property, value):
@@ -132,14 +132,14 @@ class SwitchManager(TestModule):
                          property in e['properties'] and e['nodeconnector'] == {
                              u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id}]
         result.append(current_value == [{'value': value}])
-        #After removing, the bandwidth property should be empty
+        #After removing, and restoring the default value, the bandwidth property should be default
         self.remove_property_from_nodeconnector(node_type, node_id, nc_type, nc_id, property)
         r = self.get_node(node_suffix)
         v = [e['properties'][property] for e in r['nodeConnectorProperties'] if
              property in e['properties'] and e['nodeconnector'] == {u'node': {u'type': node_type, u'id': node_id},
                                                                     u'type': nc_type, u'id': nc_id}]
         result.append(v == [])
-        self.add_property_to_nodeconnector(node_type, node_id, nc_type, nc_id, property, default_value)
+        self.add_property_to_nodeconnector(node_type, node_id, nc_type, nc_id, property, default_value[0]['value'])
         r = self.get_node(node_suffix)
         current_value = [e['properties'][property] for e in r['nodeConnectorProperties'] if
                          property in e['properties'] and e['nodeconnector'] == {
