@@ -2,7 +2,7 @@ CSIT Test
 =========
 *CSIT test tool for OpenDaylight Project*
 
-* Version: 0.2
+* Version: 0.3
 * Authors: [Baohua Yang](mailto:yangbaohua@gmail.com), [Denghui Huang](mailto:huangdenghui@gmail.com)
 * Homepage: <https://github.com/yeasy/CSIT_Test>
 
@@ -50,7 +50,7 @@ CSIT Test
 Process finished with exit code 0
 ```
 
-* By Default, all modules will be tested. If you want to test specific modules, please change the `module_to_test` variable in `run.py`.
+* By default, all modules will be tested. If you want to test specific modules, please change the `module_to_test` variable in `run.py`.
 
 
 ##Code Description
