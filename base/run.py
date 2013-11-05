@@ -39,8 +39,8 @@ def run(modules=None):
 
 if __name__ == '__main__':
     doctest.testmod()
-    modules_to_test = ['switch_manager', 'topology_manager', 'forwarding_rule_manager', 'statistics_manager',
-                       'host_tracker', 'arp_handler', 'container_manager']
-    #module_names = ['topology_manager']
-    run(modules_to_test)
+    test_modules = ['switch_manager', 'topology_manager', 'forwarding_rule_manager', 'statistics_manager',
+                    'arp_handler', 'forwarding_manager', 'container_manager']
+    #test_modules = ['host_tracker']
+    run(test_modules)
     #run()
