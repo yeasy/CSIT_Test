@@ -41,7 +41,7 @@ or
 * Start 2-layer tree topology network, in Mininet, run  `sudo mn --controller=remote,ip=127.0.0.1 --mac --topo tree,2`
 * Configure gateway in the controller web GUI, name = `gateway`, subnet = `10.0.0.254/24`
 * In Mininet, run `h1 ping h2` to make sure the network is connected.
-* Download the test tool code and run `python run.py`
+* Download the test tool code and run `python run.py`. There will be no failure report if all test cases are passed.
 
 ##Code Description
 ###`base/`
