@@ -4,8 +4,8 @@ Authors: Baohua Yang@IBM, Denghui Huang@IBM
 Updated: 2013-11-05
 """
 
-from restlib import *
-from testmodule import TestModule
+from base.restlib import *
+from base.testmodule import TestModule
 
 
 class ForwardingRuleManager(TestModule):

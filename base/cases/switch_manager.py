@@ -3,8 +3,8 @@ CSIT test tools.
 Authors: Baohua Yang@IBM, Denghui Huang@IBM
 Updated: 2013-11-01
 """
-from restlib import *
-from testmodule import TestModule
+from base.restlib import *
+from base.testmodule import TestModule
 
 
 class SwitchManager(TestModule):
@@ -73,8 +73,8 @@ class SwitchManager(TestModule):
         """
         r = self.get_nodes()
         if r:
-            print ({u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'} in r and \
-                   {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'} in r and \
+            print ({u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'} in r and
+                   {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'} in r and
                    {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'} in r)
 
     def test_node_property_operations(self, node_type, node_id, property, value):
