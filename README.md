@@ -42,6 +42,7 @@ or
 * Configure gateway in the controller web GUI, name = `gateway`, subnet = `10.0.0.254/24`
 * In Mininet, run `h1 ping h2` to make sure the network is connected.
 * Download the test tool code and run `python run.py`. There will be no failure report if all test cases are passed.
+* Default, all modules will be tested. If you want to test specific modules, please change the `module_to_test` variable in `run.py`.
 
 ##Code Description
 ###`base/`
