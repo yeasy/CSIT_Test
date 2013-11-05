@@ -2,14 +2,11 @@ CSIT Test
 =========
 *CSIT test tool for OpenDaylight Project*
 
-* Version: 0.2
+* Version: 0.3
 * Authors: [Baohua Yang](mailto:yangbaohua@gmail.com), [Denghui Huang](mailto:huangdenghui@gmail.com)
 * Homepage: <https://github.com/yeasy/CSIT_Test>
 
 ##Get Code
-`git clone git@github.com:yeasy/CSIT_Test.git`
-
-or
 
 `git clone https://github.com/yeasy/CSIT_Test.git`
 
@@ -40,7 +37,21 @@ or
 
 * Start 2-layer tree topology network. For example, in Mininet, run  `sudo mn --controller=remote,ip=127.0.0.1 --mac --topo tree,2`
 * Download the test tool code and run `python run.py`. There will be no failure report if all test cases are passed.
-* Default, all modules will be tested. If you want to test specific modules, please change the `module_to_test` variable in `run.py`.
+
+```
+#Test case: switch manager
+#Test case: topology manager
+#Test case: forwarding rule manager
+#Test case: statistics manager
+#Test case: arp handler
+#Test case: forwarding manager
+#Test case: container manager
+
+Process finished with exit code 0
+```
+
+* By default, all modules will be tested. If you want to test specific modules, please change the `module_to_test` variable in `run.py`.
+
 
 ##Code Description
 ###`base/`
