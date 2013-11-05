@@ -21,38 +21,27 @@ class HostTracker(TestModule):
         The name is suggested to match the NB API.
         list all active hosts, should be done after using h1 ping h2 in mininet
         """
-        suffix = 'hosts/active'
-        r=super(self.__class__,self).read(suffix)
-        if r:
-            return r
+        return super(self.__class__, self).get_entries('hosts/active')
 
-    def add_host(self, host_id, body):
+    def add_host(self, name, body):
         """
         Add a host.
         """
-        suffix = 'address'
-        r = super(self.__class__, self).update(suffix + '/' + host_id, body)
+        r = super(self.__class__, self).add_entry('address', name, body)
 
-    def remove_host(self, host_id):
+    def remove_host(self, name):
         """
         Remove a host.
         """
-        suffix = 'address'
-        r = super(self.__class__, self).delete(suffix + '/' + host_id)
+        r = super(self.__class__, self).remove_entry('address', name)
 
-    def test_host_operations(self, host_id, body):
+    def test_host_operations(self, name, body):
         """
         Test host operations, like adding and removing.
         >>> HostTracker().test_host_operations('10.0.0.1',{'nodeType': 'OF', 'dataLayerAddress': '8e:ad:13:44:4d:8c', 'vlan': '0', 'nodeId': '00:00:00:00:00:00:00:02', 'nodeConnectorId': '1', 'networkAddress': '10.0.0.1', 'staticHost': True, 'nodeConnectorType': 'OF'})
         True
+        >>> HostTracker().test_host_operations('10.0.0.4',{'nodeType': 'OF', 'dataLayerAddress': '5e:bf:79:84:10:a6', 'vlan': '0', 'nodeId': '00:00:00:00:00:00:00:03', 'nodeConnectorId': '2', 'networkAddress': '10.0.0.4', 'staticHost': True, 'nodeConnectorType': 'OF'})
+        True
         """
-        result = []
-        #Add a host and test if succeed
-        self.add_host(host_id, body)
-        r = self.get_hosts()
-        result.append(body in r['hostConfig'])
-        #Remove the added host and test if succeed
-        self.remove_host(host_id)
-        r = self.get_hosts()
-        result.append(body not in r['hostConfig'])
-        return result == [True, True]
+        r = super(self.__class__, self).test_add_remove_operations('hosts/active', 'address', name, body, 'hostConfig')
+        return r == [True, True]

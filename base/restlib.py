@@ -17,7 +17,7 @@ DEFAULT_CONTAINER = 'default'
 DEFAULT_USER = 'admin'
 DEFAULT_PWD = 'admin'
 CASES_DIR = 'cases'
-TIMEOUTS = 5
+TIMEOUTS = 2
 
 '''
 Send a POST request.
@@ -44,12 +44,12 @@ def do_post_request(url, content_type, payload=None, user=DEFAULT_USER, password
         return r.status_code
 
 
-'''
-Send a GET request.
-
-@return The status code.
-'''
 def do_get_request_with_status_code(url, content_type, user=DEFAULT_USER, password=DEFAULT_PWD):
+    '''
+    Send a GET request.
+    @return The status code.
+    '''
+    r = None
     try:
         r = requests.get(url, auth=(user, password), timeout=TIMEOUTS)
         r.raise_for_status()
@@ -60,13 +60,13 @@ def do_get_request_with_status_code(url, content_type, user=DEFAULT_USER, passwo
         return r.status_code
 
 
-'''
-Send a PUT request.
-
-@return The status code.
-'''
 def do_put_request(url, content_type, payload=None, user=DEFAULT_USER, password=DEFAULT_PWD):
+    '''
+    Send a PUT request.
+    @return The status code.
+    '''
     data = payload
+    headers = {}
     if content_type == 'json':
         headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
         if payload != None:
@@ -84,26 +84,26 @@ def do_put_request(url, content_type, payload=None, user=DEFAULT_USER, password=
         return r.status_code
 
 
-'''
-Send a DELETE request.
-
-@return The status code.
-'''
 def do_delete_request(url, user=DEFAULT_USER, password=DEFAULT_PWD):
+    '''
+    Send a DELETE request.
+    @return The status code.
+    '''
+    r = None
     try:
         r = requests.delete(url, auth=(user, password), timeout=TIMEOUTS)
         r.raise_for_status()
     except (requests.exceptions.HTTPError, requests.exceptions.Timeout) as e:
         print e
-        return r.status_code
-    else:
-        return r.status_code
+    finally:
+        if r:
+            return r.status_code
 
 
-'''
-Convert the result content to list.
-'''
 def convert_result_to_list(result):
+    '''
+    Convert the result content to list.
+    '''
     list2 = []
     #print result
     content = result.values()
@@ -118,16 +118,13 @@ def convert_result_to_list(result):
     return list3
 
 
-'''
-Send a GET request and get the response.
-@return response content as list.
-'''
-
-
 def do_get_request_with_response_content(url, content_type, user=DEFAULT_USER, password=DEFAULT_PWD,
                                          convert_to_list=False):
+    '''
+    Send a GET request and get the response.
+    @return response content as list.
+    '''
     try:
-        #print url
         r = requests.get(url, auth=(user, password), timeout=TIMEOUTS)
         r.raise_for_status()
     except (requests.exceptions.HTTPError, requests.exceptions.Timeout) as e:

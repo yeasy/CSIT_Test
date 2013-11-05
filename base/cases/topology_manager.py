@@ -27,19 +27,28 @@ class TopologyManager(TestModule):
         """
         r = super(self.__class__, self).read()
         if r:
-            for i in range(0,len(r),2):
-                nc = r[i]
-                if nc[u'tailNodeConnector']=={u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'}, u'type': u'OF', u'id': u'3'}:
-                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'}, u'type': u'OF', u'id': u'2'}:
+            v = r['edgeProperties']
+            for i in range(0, len(r), 2):
+                nc = v[i]['edge']
+                if nc[u'tailNodeConnector'] == {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'},
+                                                u'type': u'OF', u'id': u'3'}:
+                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
+                                                    u'type': u'OF', u'id': u'2'}:
                         print False
-                elif nc[u'tailNodeConnector']=={u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'}, u'type': u'OF', u'id': u'3'}:
-                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'}, u'type': u'OF', u'id': u'1'}:
+                elif nc[u'tailNodeConnector'] == {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'},
+                                                  u'type': u'OF', u'id': u'3'}:
+                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
+                                                    u'type': u'OF', u'id': u'1'}:
                         print False
-                elif nc[u'tailNodeConnector']=={u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'}, u'type': u'OF', u'id': u'1'}:
-                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'}, u'type': u'OF', u'id': u'3'}:
+                elif nc[u'tailNodeConnector'] == {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
+                                                  u'type': u'OF', u'id': u'1'}:
+                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'},
+                                                    u'type': u'OF', u'id': u'3'}:
                         print False
-                elif nc[u'tailNodeConnector']=={u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'}, u'type': u'OF', u'id': u'2'}:
-                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'}, u'type': u'OF', u'id': u'3'}:
+                elif nc[u'tailNodeConnector'] == {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
+                                                  u'type': u'OF', u'id': u'2'}:
+                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'},
+                                                    u'type': u'OF', u'id': u'3'}:
                         print False
                 else:
                     print False
@@ -59,16 +68,16 @@ class TopologyManager(TestModule):
         """
         Add a userlink.
         """
-        suffix='userLink'
+        suffix = 'userLink'
         r = super(self.__class__, self).update(suffix + '/' + name, body)
         return r
 
-    def remove_userlink(self,name):
+    def remove_userlink(self, name):
         """
         Remove a userlink.
         """
-        suffix='userLink'
-        r=super(self.__class__,self).delete(suffix+'/'+name)
+        suffix = 'userLink'
+        r = super(self.__class__, self).delete(suffix + '/' + name)
         return r
 
     def test_userlink_operations(self, name, body):
@@ -77,16 +86,5 @@ class TopologyManager(TestModule):
         >>> TopologyManager().test_userlink_operations('link1', {'status':'Success','name':'link1','srcNodeConnector':'OF|1@OF|00:00:00:00:00:00:00:02','dstNodeConnector':'OF|1@OF|00:00:00:00:00:00:00:03'})
         True
         """
-        #currently there is no user link
-        result=[]
-        r = self.get_userlinks()
-        result.append(r==None)
-        #After adding, there will be one userlink
-        self.add_userlink(name, body)
-        r = self.get_userlinks()
-        result.append(r == body.values())
-        #After removing, there will be none userlink
-        self.remove_userlink(name)
-        r = self.get_userlinks()
-        result.append(r == None)
-        return result == [True,True,True]
+        r = super(self.__class__, self).test_add_remove_operations('userLinks', 'userLink', name, body, 'userLinks')
+        return r == [True, True]

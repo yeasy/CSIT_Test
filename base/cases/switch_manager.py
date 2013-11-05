@@ -71,11 +71,14 @@ class SwitchManager(TestModule):
         >>> SwitchManager().test_list_nodes()
         True
         """
+        result = []
         r = self.get_nodes()
         if r:
-            print ({u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'} in r and
-                   {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'} in r and
-                   {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'} in r)
+            t = [e['node'] for e in r['nodeProperties']]
+            result.append({u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'} in t)
+            result.append({u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'} in t)
+            result.append({u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'} in t)
+            return result == [True, True, True]
 
     def test_node_property_operations(self, node_type, node_id, property, value):
         """
@@ -88,22 +91,25 @@ class SwitchManager(TestModule):
         >>> SwitchManager().test_node_property_operations('OF','00:00:00:00:00:00:00:03','description','Switch3')
         True
         """
-        result=[]
+        result = []
         #current node properties should not include description
         r = self.get_nodes()
-        index = r.index({u'type': node_type, u'id': node_id})
-        result.append(r[index + 1][property] == {u'value': u'None'})
+        v = [e['properties'][property] for e in r['nodeProperties'] if
+             e['node'] == {u'type': node_type, u'id': node_id}]
+        result.append(v == [{u'value': u'None'}])
         #After adding, current node properties should include description
         self.add_property_to_node(node_type, node_id, property, value)
         r = self.get_nodes()
-        index = r.index({u'type': node_type, u'id': node_id})
-        result.append(r[index + 1][property] == {u'value': value})
+        v = [e['properties'][property] for e in r['nodeProperties'] if
+             e['node'] == {u'type': node_type, u'id': node_id}]
+        result.append(v == [{u'value': value}])
         #After removing, current node properties should not include description
         self.remove_property_from_node(node_type, node_id, property)
         r = self.get_nodes()
-        index = r.index({u'type': node_type, u'id': node_id})
-        result.append(r[index + 1][property] == {u'value': u'None'})
-        return result == [True,True,True]
+        v = [e['properties'][property] for e in r['nodeProperties'] if
+             e['node'] == {u'type': node_type, u'id': node_id}]
+        result.append(v == [{u'value': u'None'}])
+        return result == [True, True, True]
 
     def test_nodeconnector_property_operations(self, node_type, node_id, nc_type, nc_id, property, value):
         """
@@ -112,26 +118,31 @@ class SwitchManager(TestModule):
         >>> SwitchManager().test_nodeconnector_property_operations('OF','00:00:00:00:00:00:00:01','OF','1','bandwidth',1000)
         True
         """
-        result=[]
+        result = []
         node_suffix = 'node/' + node_type + '/' + node_id
         #default bw should be 10000000000L
         r = self.get_node(node_suffix)
-        index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
-        default_value = r[index + 1][property]['value']
+        default_value = [e['properties'][property] for e in r['nodeConnectorProperties'] if
+                         property in e['properties'] and e['nodeconnector'] == {
+                             u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id}]
         #After setting, the value should be the value
         self.add_property_to_nodeconnector(node_type, node_id, nc_type, nc_id, property, value)
         r = self.get_node(node_suffix)
-        index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
-        current_value = r[index + 1][property]['value']
-        result.append(current_value == value)
+        current_value = [e['properties'][property] for e in r['nodeConnectorProperties'] if
+                         property in e['properties'] and e['nodeconnector'] == {
+                             u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id}]
+        result.append(current_value == [{'value': value}])
         #After removing, the bandwidth property should be empty
         self.remove_property_from_nodeconnector(node_type, node_id, nc_type, nc_id, property)
         r = self.get_node(node_suffix)
-        index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
-        result.append(property not in r[index + 1])
+        v = [e['properties'][property] for e in r['nodeConnectorProperties'] if
+             property in e['properties'] and e['nodeconnector'] == {u'node': {u'type': node_type, u'id': node_id},
+                                                                    u'type': nc_type, u'id': nc_id}]
+        result.append(v == [])
         self.add_property_to_nodeconnector(node_type, node_id, nc_type, nc_id, property, default_value)
         r = self.get_node(node_suffix)
-        index = r.index({u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id})
-        current_value = r[index + 1][property]['value']
+        current_value = [e['properties'][property] for e in r['nodeConnectorProperties'] if
+                         property in e['properties'] and e['nodeconnector'] == {
+                             u'node': {u'type': node_type, u'id': node_id}, u'type': nc_type, u'id': nc_id}]
         result.append(current_value == default_value)
-        return result == [True,True,True]
+        return result == [True, True, True]

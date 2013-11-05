@@ -18,24 +18,20 @@ class ForwardingRuleManager(TestModule):
                  container=DEFAULT_CONTAINER, contentType='json', prefix=DEFAULT_PREFIX):
         super(self.__class__, self).__init__(restSubContext, user, password, container, contentType, prefix)
 
-    def get_flows(self, suffix=''):
+    def get_flows(self):
         """
         The name is suggested to match the NB API.
         Show the flows
         """
-        r = super(self.__class__, self).read(suffix)
-        if r:
-            return r
+        return super(self.__class__, self).get_entries('')
 
     def add_flow_to_node(self, node_type, node_id, name, body):
         suffix = 'node/' + node_type + '/' + node_id + '/staticFlow'
-        r = super(self.__class__, self).update(suffix + '/' + name, body)
-        return r
+        r = super(self.__class__, self).add_entry(suffix, name, body)
 
     def remove_flow_from_node(self, node_type, node_id, name):
         suffix = 'node/' + node_type + '/' + node_id + '/staticFlow'
-        r = super(self.__class__, self).delete(suffix + '/' + name)
-        return r
+        r = super(self.__class__, self).remove_entry(suffix, name)
 
     def test_flow_operations(self, node_type, node_id, name, body):
         """
@@ -50,13 +46,13 @@ class ForwardingRuleManager(TestModule):
         result = []
         #current flow table should be empty.
         r = self.get_flows()
-        result.append(r == None)
+        result.append(body not in r['flowConfig'])
         #Add a flow and test if succeed
         self.add_flow_to_node(node_type, node_id, name, body)
         r = self.get_flows()
-        result.append(r == body.values())
+        result.append(body in r['flowConfig'])
         #Remove a flow and test if succeed
         self.remove_flow_from_node(node_type, node_id, name)
         r = self.get_flows()
-        result.append(r == None)
+        result.append(body not in r['flowConfig'])
         return result == [True, True, True]

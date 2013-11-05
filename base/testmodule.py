@@ -20,6 +20,38 @@ class TestModule(object):
         self.contentType=contentType
         self.prefix=prefix
 
+    def get_entries(self, suffix):
+        """
+        Get the existed entries in the service.
+        """
+        return self.read(suffix)
+
+    def add_entry(self, suffix, name, body):
+        """
+        Add entry to the service.
+        """
+        self.update(suffix + '/' + name, body)
+
+    def remove_entry(self, suffix, name):
+        """
+        Remove entry from the service.
+        """
+        self.delete(suffix + '/' + name)
+
+    def test_add_remove_operations(self, suffix_entries, suffix_entry, name, body, key):
+        result = []
+        #Add an entry
+        self.add_entry(suffix_entry, name, body)
+        r = self.get_entries(suffix_entries)
+        v = r.get(key)
+        result.append(body in v if v else False)
+        #Remove an entry
+        self.remove_entry(suffix_entry, name)
+        r = self.get_entries(suffix_entries)
+        v = r.get(key)
+        result.append(body not in v if v else True)
+        return result
+
     def create(self,suffix,body=None):
         """
         POST to given suffix url.

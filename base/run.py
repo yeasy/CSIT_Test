@@ -15,20 +15,20 @@ import os
 from restlib import *
 
 
-'''
-Run single test on given module.
-'''
 def test_case(module_name):
+    '''
+    Run single test on given module.
+    '''
     print "#Test case: " + module_name.split('/')[1][:-3].replace('_',' ')
     cmd = 'python -m doctest '+module_name
     os.system(cmd)
 
-'''
-Run test cases according to the given modules.
-If no parameter is given, then will scan the case directory,
- and try to run all cases.
-'''
 def run(modules=None):
+    '''
+    Run test cases according to the given modules.
+    If no parameter is given, then will scan the case directory,
+     and try to run all cases.
+    '''
     if modules:
         for name in modules:
             test_case(CASES_DIR+'/'+name+'.py')
@@ -37,13 +37,9 @@ def run(modules=None):
             for name in files:
                 test_case(root+'/'+name)
 
-'''
-This only tests the switchmanager now.
-TODO: extend to write a template to all bundles.
-'''
 if __name__ == '__main__':
     doctest.testmod()
     module_names=['switch_manager','topology_manager','forwarding_rule_manager','statistics_manager','host_tracker','arp_handler','container_manager']
-    module_names = ['forwarding_rule_manager']
+    #module_names = ['topology_manager']
     run(module_names)
     #run()
