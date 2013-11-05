@@ -16,15 +16,43 @@ class HostTracker(TestModule):
     def __init__(self,restSubContext='/controller/nb/v2/hosttracker',user=DEFAULT_USER, password=DEFAULT_PWD,container=DEFAULT_CONTAINER,contentType='json',prefix=DEFAULT_PREFIX):
        super(self.__class__,self).__init__(restSubContext,user,password,container,contentType,prefix)
 
-    def get_active_hosts(self,suffix='hosts/active'):
+    def get_hosts(self):
         """
         The name is suggested to match the NB API.
         list all active hosts, should be done after using h1 ping h2 in mininet
-        >>> HostTracker().get_active_hosts()
-        True
-        True
         """
+        suffix = 'hosts/active'
         r=super(self.__class__,self).read(suffix)
         if r:
-            print '10.0.0.1' in r
-            print '10.0.0.2' in r
+            return r
+
+    def add_host(self, host_id, body):
+        """
+        Add a host.
+        """
+        suffix = 'address'
+        r = super(self.__class__, self).update(suffix + '/' + host_id, body)
+
+    def remove_host(self, host_id):
+        """
+        Remove a host.
+        """
+        suffix = 'address'
+        r = super(self.__class__, self).delete(suffix + '/' + host_id)
+
+    def test_host_operations(self, host_id, body):
+        """
+        Test host operations, like adding and removing.
+        >>> HostTracker().test_host_operations('10.0.0.1',{'nodeType': 'OF', 'dataLayerAddress': '8e:ad:13:44:4d:8c', 'vlan': '0', 'nodeId': '00:00:00:00:00:00:00:02', 'nodeConnectorId': '1', 'networkAddress': '10.0.0.1', 'staticHost': True, 'nodeConnectorType': 'OF'})
+        True
+        """
+        result = []
+        #Add a host and test if succeed
+        self.add_host(host_id, body)
+        r = self.get_hosts()
+        result.append(body in r['hostConfig'])
+        #Remove the added host and test if succeed
+        self.remove_host(host_id)
+        r = self.get_hosts()
+        result.append(body not in r['hostConfig'])
+        return result == [True, True]
