@@ -114,7 +114,7 @@ def convert_result_to_list(result):
     for list4 in list2:
         for element in list4:
             list3.append(element)
-        #print list3
+            #print list3
     return list3
 
 

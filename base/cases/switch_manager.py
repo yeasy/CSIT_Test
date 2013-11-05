@@ -3,8 +3,8 @@ CSIT test tools.
 Authors: Baohua Yang@IBM, Denghui Huang@IBM
 Updated: 2013-11-01
 """
-from base.restlib import *
-from base.testmodule import TestModule
+from restlib import *
+from testmodule import TestModule
 
 
 class SwitchManager(TestModule):
