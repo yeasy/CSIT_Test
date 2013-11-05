@@ -38,9 +38,7 @@ or
   ./run.sh
   ```
 
-* Start 2-layer tree topology network, in Mininet, run  `sudo mn --controller=remote,ip=127.0.0.1 --mac --topo tree,2`
-* Configure gateway in the controller web GUI, name = `gateway`, subnet = `10.0.0.254/24`
-* In Mininet, run `h1 ping h2` to make sure the network is connected.
+* Start 2-layer tree topology network. For example, in Mininet, run  `sudo mn --controller=remote,ip=127.0.0.1 --mac --topo tree,2`
 * Download the test tool code and run `python run.py`. There will be no failure report if all test cases are passed.
 * Default, all modules will be tested. If you want to test specific modules, please change the `module_to_test` variable in `run.py`.
 
