@@ -9,9 +9,10 @@ Usage: Before running the test tool, should
  2. Configure gateway in the controller web GUI, name = 'gateway', subnet = '10.0.0.254/24'.
  3. In Mininet, run 'h1 ping h2' to make sure the network is connected.
 """
-import doctest,os
+import doctest
+import os
+
 from restlib import *
-from testmodule import TestModule
 
 
 '''
@@ -43,6 +44,6 @@ TODO: extend to write a template to all bundles.
 if __name__ == '__main__':
     doctest.testmod()
     module_names=['switch_manager','topology_manager','forwarding_rule_manager','statistics_manager','host_tracker','arp_handler','container_manager']
-    module_names=['switch_manager','topology_manager']
+    module_names = ['forwarding_rule_manager']
     run(module_names)
     #run()
