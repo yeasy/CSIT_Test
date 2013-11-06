@@ -1,0 +1,10 @@
+*** Settings ***
+Library           ../cases/ArpHandler.py
+Variables         all_variables.py
+
+*** Variables ***
+
+*** Test Cases ***
+Add and Remove subnets
+    ${result}    Test subnet operations    ${subnet_name}    ${subnet_body}
+    Should Be Equal    ${result}    ${True}
