@@ -67,7 +67,8 @@ Store the test cases for all modules. Test case is named as the module name, e.g
 
 ##Development Plan
 * Finish all module test in OpenDaylight's base release.
-* Integrated into the robot framework.
+* Integration into the robot framework.
+* Interaction with other components, such as the network.
 
 ##About OpenDaylight
 OpenDaylight is the first production-quality open-source SDN management platform sponsored by Linux Foundation. 
