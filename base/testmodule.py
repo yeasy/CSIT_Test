@@ -20,11 +20,20 @@ class TestModule(object):
         self.contentType=contentType
         self.prefix=prefix
 
-    def get_entries(self, suffix):
+    def get_entries(self, suffix, key=None):
         """
         Get the existed entries in the service.
         """
-        return self.read(suffix)
+        if isinstance(suffix, list) and key:
+            result = {}
+            result[key] = []
+            for s in suffix:
+                result[key].extend(self.get_entries(s).get(key))
+            return result
+        elif isinstance(suffix, str):
+            return self.read(suffix)
+        else:
+            return None
 
     def add_entry(self, suffix, name, body):
         """
@@ -42,14 +51,16 @@ class TestModule(object):
         result = []
         #Add an entry
         self.add_entry(suffix_entry, name, body)
-        r = self.get_entries(suffix_entries)
-        v = r.get(key)
-        result.append(body in v if v else False)
-        #Remove an entry
-        self.remove_entry(suffix_entry, name)
-        r = self.get_entries(suffix_entries)
-        v = r.get(key)
-        result.append(body not in v if v else True)
+        r = self.get_entries(suffix_entries, key)
+        if r:
+            v = r.get(key)
+            result.append(body in v if v else False)
+            #Remove the added entry
+        if result == [True]:
+            self.remove_entry(suffix_entry, name)
+            r = self.get_entries(suffix_entries, key)
+            v = r.get(key)
+            result.append(body not in v if v else True)
         return result == [True, True]
 
     def create(self,suffix,body=None):
@@ -78,7 +89,6 @@ class TestModule(object):
     def update(self,suffix,body=None):
         """
         PUT to given suffix url.
-        TODO: complete
         """
         url = self.prefix+self.restSubContext
         if self.container:
