@@ -21,7 +21,7 @@ class HostTracker(TestModule):
         The name is suggested to match the NB API.
         list all active hosts, should be done after using h1 ping h2 in mininet
         """
-        return super(self.__class__, self).get_entries('hosts/active')
+        return super(self.__class__, self).get_entries(['hosts/active', 'hosts/inactive'], 'hostConfig')
 
     def add_host(self, name, body):
         """
@@ -38,10 +38,9 @@ class HostTracker(TestModule):
     def test_host_operations(self, name, body):
         """
         Test host operations, like adding and removing.
-        >>> HostTracker().test_host_operations('10.0.0.1',{'nodeType': 'OF', 'dataLayerAddress': '8e:ad:13:44:4d:8c', 'vlan': '0', 'nodeId': '00:00:00:00:00:00:00:02', 'nodeConnectorId': '1', 'networkAddress': '10.0.0.1', 'staticHost': True, 'nodeConnectorType': 'OF'})
-        True
-        >>> HostTracker().test_host_operations('10.0.0.4',{'nodeType': 'OF', 'dataLayerAddress': '5e:bf:79:84:10:a6', 'vlan': '0', 'nodeId': '00:00:00:00:00:00:00:03', 'nodeConnectorId': '2', 'networkAddress': '10.0.0.4', 'staticHost': True, 'nodeConnectorType': 'OF'})
+        >>> HostTracker().test_host_operations('10.0.1.4',{'nodeType': 'OF', 'dataLayerAddress': '5e:bf:79:84:10:a6', 'vlan': '1', 'nodeId': '00:00:00:00:00:00:00:03', 'nodeConnectorId': '9', 'networkAddress': '10.0.1.4', 'staticHost': True, 'nodeConnectorType': 'OF'})
         True
         """
-        return super(self.__class__, self).test_add_remove_operations('hosts/active', 'address', name, body,
+        return super(self.__class__, self).test_add_remove_operations(['hosts/active', 'hosts/inactive'], 'address',
+                                                                      name, body,
                                                                       'hostConfig')
