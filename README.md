@@ -2,7 +2,7 @@ CSIT Test
 =========
 *CSIT test tool for OpenDaylight Project*
 
-* Version: 0.3
+* Version: 0.4
 * Authors: [Baohua Yang](mailto:yangbaohua@gmail.com), [Denghui Huang](mailto:huangdenghui@gmail.com)
 * Homepage: <https://github.com/yeasy/CSIT_Test>
 
@@ -43,6 +43,7 @@ CSIT Test
 #Test case: topology manager
 #Test case: forwarding rule manager
 #Test case: statistics manager
+#Test case: host tracker
 #Test case: arp handler
 #Test case: forwarding manager
 #Test case: container manager

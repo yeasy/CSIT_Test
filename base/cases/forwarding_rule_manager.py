@@ -47,12 +47,13 @@ class ForwardingRuleManager(TestModule):
         #current flow table should be empty.
         r = self.get_flows()
         result.append(body not in r['flowConfig'])
-        #Add a flow and test if succeed
+        #Add a flow
         self.add_flow_to_node(node_type, node_id, name, body)
         r = self.get_flows()
         result.append(body in r['flowConfig'])
-        #Remove a flow and test if succeed
-        self.remove_flow_from_node(node_type, node_id, name)
-        r = self.get_flows()
-        result.append(body not in r['flowConfig'])
+        #Remove the flow and test if succeed
+        if result == [True, True]:
+            self.remove_flow_from_node(node_type, node_id, name)
+            r = self.get_flows()
+            result.append(body not in r['flowConfig'])
         return result == [True, True, True]

@@ -1,7 +1,7 @@
 """
 CSIT test tools.
 Authors: Baohua Yang@IBM, Denghui Huang@IBM
-Updated: 2013-11-01
+Updated: 2013-11-06
 """
 
 from restlib import *

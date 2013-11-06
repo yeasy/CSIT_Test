@@ -1,7 +1,7 @@
 """
 CSIT test tools.
 Authors: Denghui Huang@IBM, Baohua Yang@IBM
-Updated: 2013-10-30
+Updated: 2013-11-06
 """
 import json
 
