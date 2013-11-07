@@ -12,15 +12,17 @@ class TestModule(object):
     Basic module class for test restful APIS.
     Support the standard Create, Read, Update, Delete (CRUD) actions.
     """
-    def __init__(self,restSubContext,user=DEFAULT_USER, password=DEFAULT_PWD,container=DEFAULT_CONTAINER,contentType='json',prefix=DEFAULT_PREFIX):
-        self.restSubContext=restSubContext
-        self.container=container
+
+    def __init__(self, restSubContext, user=DEFAULT_USER, password=DEFAULT_PWD, container=DEFAULT_CONTAINER,
+                 contentType='json', prefix=DEFAULT_PREFIX):
+        self.restSubContext = restSubContext
+        self.container = container
         self.user = user
         self.password = password
-        self.contentType=contentType
-        self.prefix=prefix
+        self.contentType = contentType
+        self.prefix = prefix
 
-    def get_entries(self, suffix, key=None):
+    def get_entries(self, suffix=None, key=None):
         """
         Get the existed entries in the service.
         """
@@ -32,6 +34,8 @@ class TestModule(object):
             return result
         elif isinstance(suffix, str):
             return self.read(suffix)
+        elif not suffix:
+            return self.read()
         else:
             return None
 
@@ -63,48 +67,48 @@ class TestModule(object):
             result.append(body not in v if v else True)
         return result == [True, True]
 
-    def create(self,suffix,body=None):
+    def create(self, suffix, body=None):
         """
         POST to given suffix url.
         TODO: complete
         """
-        url = self.prefix+self.restSubContext
+        url = self.prefix + self.restSubContext
         if self.container:
-            url += '/'+self.container
+            url += '/' + self.container
         if suffix:
-            url += '/'+suffix
-        return do_post_request(url, self.contentType,body, self.user, self.password)
+            url += '/' + suffix
+        return do_post_request(url, self.contentType, body, self.user, self.password)
 
-    def read(self,suffix=None):
+    def read(self, suffix=None):
         """
         GET from given suffix url.
         """
-        url = self.prefix+self.restSubContext
+        url = self.prefix + self.restSubContext
         if self.container:
-            url += '/'+self.container
+            url += '/' + self.container
         if suffix:
-            url += '/'+suffix
+            url += '/' + suffix
         return do_get_request_with_response_content(url, self.contentType, self.user, self.password)
 
-    def update(self,suffix,body=None):
+    def update(self, suffix, body=None):
         """
         PUT to given suffix url.
         """
-        url = self.prefix+self.restSubContext
+        url = self.prefix + self.restSubContext
         if self.container:
-            url += '/'+self.container
+            url += '/' + self.container
         if suffix:
-            url += '/'+suffix
+            url += '/' + suffix
         return do_put_request(url, self.contentType, body, self.user, self.password)
 
-    def delete(self,suffix):
+    def delete(self, suffix):
         """
         DELETE to given suffix url.
         TODO: complete
         """
-        url = self.prefix+self.restSubContext
+        url = self.prefix + self.restSubContext
         if self.container:
-            url += '/'+self.container
+            url += '/' + self.container
         if suffix:
-            url += '/'+suffix
+            url += '/' + suffix
         return do_delete_request(url, self.user, self.password)

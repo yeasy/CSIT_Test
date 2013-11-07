@@ -3,8 +3,14 @@ CSIT test tools.
 Authors: Baohua Yang@IBM, Denghui Huang@IBM
 Updated: 2013-11-01
 """
+
+import sys
+
+sys.path.append('..')
 from restlib import *
 from testmodule import TestModule
+
+sys.path.remove('..')
 
 
 class SwitchManager(TestModule):

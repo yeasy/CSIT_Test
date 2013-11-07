@@ -4,8 +4,13 @@ Authors: Baohua Yang@IBM, Denghui Huang@IBM
 Updated: 2013-11-01
 """
 
+import sys
+
+sys.path.append('..')
 from restlib import *
 from testmodule import TestModule
+
+sys.path.remove('..')
 
 
 class ArpHandler(TestModule):
@@ -44,3 +49,7 @@ class ArpHandler(TestModule):
         True
         """
         return super(self.__class__, self).test_add_remove_operations('subnets', 'subnet', name, body, 'subnetConfig')
+
+
+if __name__ == '__main__':
+    print 'arp handler'

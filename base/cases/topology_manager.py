@@ -4,8 +4,13 @@ Authors: Baohua Yang@IBM, Denghui Huang@IBM
 Updated: 2013-11-01
 """
 
+import sys
+
+sys.path.append('..')
 from restlib import *
 from testmodule import TestModule
+
+sys.path.remove('..')
 
 
 class TopologyManager(TestModule):
@@ -25,34 +30,27 @@ class TopologyManager(TestModule):
         >>> TopologyManager().get_topology()
         True
         """
-        r = super(self.__class__, self).read()
+        result = []
+        r = super(self.__class__, self).get_entries()
         if r:
-            v = r['edgeProperties']
-            for i in range(0, len(r), 2):
-                nc = v[i]['edge']
-                if nc[u'tailNodeConnector'] == {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'},
-                                                u'type': u'OF', u'id': u'3'}:
-                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
-                                                    u'type': u'OF', u'id': u'2'}:
-                        print False
-                elif nc[u'tailNodeConnector'] == {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'},
-                                                  u'type': u'OF', u'id': u'3'}:
-                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
-                                                    u'type': u'OF', u'id': u'1'}:
-                        print False
-                elif nc[u'tailNodeConnector'] == {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
-                                                  u'type': u'OF', u'id': u'1'}:
-                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'},
-                                                    u'type': u'OF', u'id': u'3'}:
-                        print False
-                elif nc[u'tailNodeConnector'] == {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
-                                                  u'type': u'OF', u'id': u'2'}:
-                    if nc[u'headNodeConnector'] != {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'},
-                                                    u'type': u'OF', u'id': u'3'}:
-                        print False
-                else:
-                    print False
-            print True
+            v = [e['edge'] for e in r['edgeProperties']]
+            result.append({u'tailNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
+                                                  u'type': u'OF', u'id': u'2'},
+                           u'headNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'},
+                                                  u'type': u'OF', u'id': u'3'}} in v)
+            result.append({u'tailNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:03'},
+                                                  u'type': u'OF', u'id': u'3'},
+                           u'headNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
+                                                  u'type': u'OF', u'id': u'2'}} in v)
+            result.append({u'tailNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'},
+                                                  u'type': u'OF', u'id': u'3'},
+                           u'headNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
+                                                  u'type': u'OF', u'id': u'1'}} in v)
+            result.append({u'tailNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:01'},
+                                                  u'type': u'OF', u'id': u'1'},
+                           u'headNodeConnector': {u'node': {u'type': u'OF', u'id': u'00:00:00:00:00:00:00:02'},
+                                                  u'type': u'OF', u'id': u'3'}} in v)
+            print result == [True, True, True, True]
 
     def get_userlinks(self):
         """
