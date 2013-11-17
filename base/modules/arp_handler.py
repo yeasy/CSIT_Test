@@ -28,7 +28,7 @@ class ArpHandler(TestModule):
         The name is suggested to match the NB API.
         list all subnets and their properties.
         """
-        return super(self.__class__, self).get_entries('subnets','subnetConfig')
+        return super(self.__class__, self).get_entries('subnets')
 
     def add_subnet_gateway(self, name, body):
         """
