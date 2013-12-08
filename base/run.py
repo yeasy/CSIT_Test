@@ -11,6 +11,8 @@ Usage: Before running the test tool, should
 """
 import doctest
 import os
+import time
+
 from restlib import *
 
 
@@ -28,6 +30,11 @@ def run(modules=None):
     If no parameter is given, then will scan the case directory,
      and try to run all cases.
     '''
+    if DEFAULT_MININET_IP != '':
+        os.system("ssh %s 'sudo killall mn >/dev/null 2>&1; sudo mn -c >/dev/null 2>&1'" % (DEFAULT_MININET_IP))
+        os.system("ssh %s 'sudo screen -d -m mn --controller=remote,ip=%s --mac --topo tree,2>/dev/null 2>&1 &'" % (
+        DEFAULT_MININET_IP, DEFAULT_CONTROLLER_IP))
+        time.sleep(3)
     backup_dir = os.getcwd()
     if not modules:
         modules = [e[:-3] for e in os.listdir(MODULES_DIR) if e.endswith('.py')]
@@ -35,6 +42,8 @@ def run(modules=None):
     for name in modules:
         test_module(name)
     os.chdir(backup_dir)
+    if DEFAULT_MININET_IP != '':
+        os.system("ssh %s 'sudo killall mn >/dev/null 2>&1; sudo mn -c >/dev/null 2>&1'" % (DEFAULT_MININET_IP))
 
 
 if __name__ == '__main__':

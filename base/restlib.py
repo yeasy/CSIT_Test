@@ -17,7 +17,9 @@ DEFAULT_CONTAINER = 'default'
 DEFAULT_USER = 'admin'
 DEFAULT_PWD = 'admin'
 MODULES_DIR = 'modules'
-TIMEOUTS = 2
+TIMEOUTS = 3
+#DEFAULT_MININET_IP = '127.0.0.1'
+DEFAULT_MININET_IP = '' #leave this empty if the mininet is already started and connected to the controller
 
 '''
 Send a POST request.
